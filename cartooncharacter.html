@@ -1,115 +1,192 @@
-```html
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Cartoon Character Quiz</title>
-    <style>
-        body{
-            font-family: 'Comic Sans MS', cursive;
-            background: linear-gradient(to right, #ff9a9e, #fad0c4);
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            height:100vh;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎭 Cartoon Character Quiz</title>
 
-        .container{
-            width:600px;
-            background:white;
-            padding:25px;
-            border-radius:20px;
-            box-shadow:0 0 20px rgba(0,0,0,0.3);
-            text-align:center;
-        }
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-        h1{
-            color:#ff4081;
-        }
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:linear-gradient(135deg,#ff9a9e,#fad0c4,#fad390);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+}
 
-        .question{
-            font-size:22px;
-            margin-bottom:15px;
-            font-weight:bold;
-        }
+.container{
+    width:100%;
+    max-width:650px;
+    background:#fff;
+    border-radius:20px;
+    padding:30px;
+    box-shadow:0 15px 35px rgba(0,0,0,.25);
+    animation:fade .5s ease;
+}
 
-        .option{
-            display:block;
-            margin:10px;
-            padding:12px;
-            background:#ffe0b2;
-            border-radius:10px;
-            cursor:pointer;
-            transition:0.3s;
-        }
+@keyframes fade{
+    from{
+        opacity:0;
+        transform:translateY(20px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
 
-        .option:hover{
-            background:#ffcc80;
-            transform:scale(1.03);
-        }
+h1{
+    text-align:center;
+    color:#ff4081;
+    margin-bottom:20px;
+}
 
-        button{
-            background:#ff4081;
-            color:white;
-            border:none;
-            padding:12px 20px;
-            font-size:18px;
-            border-radius:10px;
-            cursor:pointer;
-        }
+#progressText{
+    font-weight:bold;
+    margin-bottom:10px;
+}
 
-        button:hover{
-            background:#e91e63;
-        }
+.progress{
+    width:100%;
+    height:15px;
+    background:#ddd;
+    border-radius:20px;
+    overflow:hidden;
+    margin-bottom:20px;
+}
 
-        #result{
-            font-size:24px;
-            color:#4caf50;
-            font-weight:bold;
-            margin-top:20px;
-        }
-    </style>
+#progressBar{
+    height:100%;
+    width:0%;
+    background:linear-gradient(to right,#4CAF50,#8BC34A);
+    transition:.4s;
+}
+
+.question{
+    font-size:22px;
+    font-weight:bold;
+    margin-bottom:20px;
+}
+
+.option{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:15px;
+    margin:12px 0;
+    background:#FFF3E0;
+    border-radius:12px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.option:hover{
+    background:#FFE082;
+    transform:scale(1.02);
+}
+
+.option input{
+    transform:scale(1.2);
+}
+
+button{
+    width:100%;
+    padding:14px;
+    margin-top:20px;
+    border:none;
+    border-radius:12px;
+    background:linear-gradient(45deg,#ff4081,#ff9800);
+    color:#fff;
+    font-size:18px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+button:hover{
+    transform:scale(1.03);
+}
+
+#result{
+    text-align:center;
+    font-size:22px;
+}
+
+#result h2{
+    color:#4CAF50;
+    margin-bottom:15px;
+}
+
+.score{
+    font-size:28px;
+    margin:15px 0;
+    color:#ff4081;
+}
+
+.message{
+    font-size:24px;
+    margin-top:15px;
+}
+</style>
 </head>
+
 <body>
 
 <div class="container">
-    <h1>🎭 Cartoon Character Quiz 🎭</h1>
 
-    <div id="quiz">
-        <div class="question" id="question"></div>
+<h1>🎭 Cartoon Character Quiz 🎭</h1>
 
-        <label class="option">
-            <input type="radio" name="answer" value="A">
-            <span id="A"></span>
-        </label>
+<div id="quiz">
 
-        <label class="option">
-            <input type="radio" name="answer" value="B">
-            <span id="B"></span>
-        </label>
+<div id="progressText"></div>
 
-        <label class="option">
-            <input type="radio" name="answer" value="C">
-            <span id="C"></span>
-        </label>
+<div class="progress">
+<div id="progressBar"></div>
+</div>
 
-        <label class="option">
-            <input type="radio" name="answer" value="D">
-            <span id="D"></span>
-        </label>
+<div class="question" id="question"></div>
 
-        <br>
-        <button onclick="nextQuestion()">Next ➡️</button>
-    </div>
+<label class="option">
+<input type="radio" name="answer" value="A">
+<span id="A"></span>
+</label>
 
-    <div id="result"></div>
+<label class="option">
+<input type="radio" name="answer" value="B">
+<span id="B"></span>
+</label>
+
+<label class="option">
+<input type="radio" name="answer" value="C">
+<span id="C"></span>
+</label>
+
+<label class="option">
+<input type="radio" name="answer" value="D">
+<span id="D"></span>
+</label>
+
+<button id="nextBtn">Next ➜</button>
+
+</div>
+
+<div id="result"></div>
+
 </div>
 
 <script>
 
-const quizData = [
+const quizData=[
 {
 question:"Who lives in a pineapple under the sea?",
-options:["Tom","SpongeBob","Mickey","Doraemon"],
+options:["Tom","SpongeBob","Mickey Mouse","Doraemon"],
 answer:"B"
 },
 {
@@ -123,73 +200,146 @@ options:["Red","Green","Blue","Yellow"],
 answer:"C"
 },
 {
-question:"Who is the enemy of Tom?",
+question:"Who is Tom's biggest enemy?",
 options:["Jerry","Shinchan","Nobita","Motu"],
 answer:"A"
 },
 {
 question:"Who loves Krabby Patties?",
-options:["Patrick","Shinchan","SpongeBob","Ben 10"],
+options:["Patrick","Ben 10","SpongeBob","Shinchan"],
 answer:"C"
 }
 ];
 
-let currentQuestion = 0;
-let score = 0;
+// Shuffle Questions
+quizData.sort(()=>Math.random()-0.5);
+
+let currentQuestion=0;
+let score=0;
+
+const question=document.getElementById("question");
+const progressText=document.getElementById("progressText");
+const progressBar=document.getElementById("progressBar");
+const result=document.getElementById("result");
 
 function loadQuestion(){
-    document.getElementById("question").innerText =
-        quizData[currentQuestion].question;
 
-    document.getElementById("A").innerText =
-        quizData[currentQuestion].options[0];
+document.querySelectorAll("input[name='answer']").forEach(r=>r.checked=false);
 
-    document.getElementById("B").innerText =
-        quizData[currentQuestion].options[1];
+const q=quizData[currentQuestion];
 
-    document.getElementById("C").innerText =
-        quizData[currentQuestion].options[2];
+question.innerHTML=q.question;
 
-    document.getElementById("D").innerText =
-        quizData[currentQuestion].options[3];
+document.getElementById("A").innerHTML=q.options[0];
+document.getElementById("B").innerHTML=q.options[1];
+document.getElementById("C").innerHTML=q.options[2];
+document.getElementById("D").innerHTML=q.options[3];
 
-    document.querySelectorAll("input[name='answer']")
-    .forEach(r => r.checked = false);
+progressText.innerHTML=
+`Question ${currentQuestion+1} of ${quizData.length}`;
+
+progressBar.style.width=
+((currentQuestion)/quizData.length)*100+"%";
+
 }
+
+document.getElementById("nextBtn").addEventListener("click",nextQuestion);
 
 function nextQuestion(){
 
-    let selected =
-    document.querySelector("input[name='answer']:checked");
+const selected=document.querySelector("input[name='answer']:checked");
 
-    if(selected){
-        if(selected.value === quizData[currentQuestion].answer){
-            score++;
-        }
-    }
+if(!selected){
+alert("Please select an answer.");
+return;
+}
 
-    currentQuestion++;
+if(selected.value===quizData[currentQuestion].answer){
 
-    if(currentQuestion < quizData.length){
-        loadQuestion();
-    }
-    else{
-        document.getElementById("quiz").style.display="none";
+score++;
+alert("✅ Correct!");
 
-        let message="😊 Good Try!";
+}else{
 
-        if(score===5)
-            message="🏆 Cartoon Master!";
-        else if(score>=3)
-            message="🌟 Great Job!";
+const letters=["A","B","C","D"];
 
-        document.getElementById("result").innerHTML=
-        `
-        🎉 Quiz Completed! <br><br>
-        Score: ${score}/${quizData.length}<br><br>
-        ${message}
-        `;
-    }
+const correctIndex=
+letters.indexOf(quizData[currentQuestion].answer);
+
+alert("❌ Wrong!\nCorrect Answer: "+
+quizData[currentQuestion].options[correctIndex]);
+
+}
+
+currentQuestion++;
+
+if(currentQuestion<quizData.length){
+
+loadQuestion();
+
+}else{
+
+showResult();
+
+}
+
+}
+
+function showResult(){
+
+document.getElementById("quiz").style.display="none";
+
+progressBar.style.width="100%";
+
+let percentage=Math.round(score/quizData.length*100);
+
+let message="😊 Good Try!";
+
+if(percentage===100)
+message="🏆 Cartoon Master!";
+else if(percentage>=80)
+message="🌟 Excellent!";
+else if(percentage>=60)
+message="👍 Great Job!";
+else if(percentage>=40)
+message="🙂 Keep Practicing!";
+else
+message="📚 Better Luck Next Time!";
+
+result.innerHTML=`
+
+<h2>🎉 Quiz Completed!</h2>
+
+<div class="score">
+Score: ${score} / ${quizData.length}
+</div>
+
+<h3>${percentage}%</h3>
+
+<div class="message">${message}</div>
+
+<br>
+
+<button onclick="restartQuiz()">
+🔄 Restart Quiz
+</button>
+
+`;
+
+}
+
+function restartQuiz(){
+
+currentQuestion=0;
+score=0;
+
+quizData.sort(()=>Math.random()-0.5);
+
+document.getElementById("quiz").style.display="block";
+result.innerHTML="";
+
+loadQuestion();
+
 }
 
 loadQuestion();
